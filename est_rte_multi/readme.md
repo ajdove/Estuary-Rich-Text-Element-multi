@@ -3,7 +3,7 @@ Estuary RTE multi (Rich Text Element) is an input component to be used as part o
 Estuary RTE multi is similar to Estuary RTE with the added facility that allows multiple RTEs to be hosted on the same page. This requires slightly more advanced skill than the simple RTE. But
 it should be well within the skill range of any competant developer. 
 
-TO INSTALL: Upload est_rte_multi folder to root folder of project. On the page with the form which will contain the rich text editor: i) In the head element include: <link rel="stylesheet" href="est_rte_multi/css/estrte_style.css">
+TO INSTALL: Upload est_rte_multi folder to root folder of project. On the page with the form which will contain the rich text editor: i) In the head element include: &lt;link rel="stylesheet" href="est_rte_multi/css/estrte_style.css">
 It is advisable to include the following in the section in order to compensate for older browsers - <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 ii) At each place on the page where you wish to place the rich text editor input control: include - 'est_rte_multi/estrte_form.html'
