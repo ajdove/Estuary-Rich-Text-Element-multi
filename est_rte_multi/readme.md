@@ -10,7 +10,7 @@ ii) At each place on the page where you wish to place the rich text editor input
 
 ii) This is where it gets slightly more complicated: The first occurance of the Rich Text Element on the page must be indexed at 1000 and each additional occurance incremented by 1.
       ie change "%%placeholder%%" on estrte_form.html to the appropriate index.
-      As an example from my scenicireland.co.uk picture blog site written in PHP:
+      As an example from my scenicireland.co.uk picture blog site written in core PHP:
       
         $pic_counter = 1000;
         
