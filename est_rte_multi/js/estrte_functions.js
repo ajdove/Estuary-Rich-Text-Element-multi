@@ -30,7 +30,7 @@ estrte_select_colour_div_html += '<input type="hidden" name="tempRed" id="#place
 estrte_select_colour_div_html += '</div>';
 estrte_select_colour_div_html += '</div>';
 estrte_select_colour_div_html += '<div class="estrte_colorPickerDivLower" id="#placeholder#estrte_colorPickerDivLower"><label class="estrte_setTextColorLabel" id="#placeholder#estrte_setTextColorLabelColor" onclick="estrte_setColor(\'color\')">Set Color</label>';
-estrte_select_colour_div_html += '<label class="estrte_setTextColorLabel" id="#placeholder#estrte_setTextColorLabelBgColor" onclick="estrte_setBackgroundColor()">Set Background</label></div></div>';
+estrte_select_colour_div_html += '<label class="estrte_setTextColorLabel" id="#placeholder#estrte_setTextColorLabelBgColor" onclick="estrte_setBackgroundColor(#placeholder#)">Set Background</label></div></div>';
 
 
 
@@ -1851,7 +1851,7 @@ function insertAfter(newNode, existingNode) {
  	document.getElementById(pic_counter + "estrte_undo").style.display = "inline-block";
  	document.getElementById(pic_counter + "estrte_undo").innerHTML = "Undo";
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML; 
-	document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText);
+	document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter);
 	return;
       }
 
@@ -1918,7 +1918,7 @@ function setDocMode(pic_counter, toSource) {
         doc.focus();
       }
       
-function estrte_sanitise_input_content(inputHtmlRaw){
+function estrte_sanitise_input_content(inputHtmlRaw, pic_counter){
   let map = {
     '&': '&amp;',
     '<': '&lt;',
@@ -1926,7 +1926,8 @@ function estrte_sanitise_input_content(inputHtmlRaw){
     '"': '&quot;',
     "'": '&#039;'
   };
-let inputHtml = inputHtmlRaw.replace(/[&<>"']/g, function(m) { return map[m]; });
+let inputHtml = inputHtmlRaw.replace(pic_counter + 'estrte_input_field', 'pref');
+inputHtml = inputHtml.replace(/[&<>"']/g, function(m) { return map[m]; });
 inputHtml = inputHtml.replace(/name=&quot;estrte_input_field&quot;/g, '');  
 inputHtml = inputHtml.replace(/id=&quot;estrte_input_field&quot;/g, '');  
 inputHtml = inputHtml.replace(/id=&quot;estrte_content_wrapper&quot;/g, '');  
@@ -2004,6 +2005,7 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
         parentInnerHTML = window.getSelection().anchorNode.parentElement.innerHTML;
 		}
 	}
+   if((parentElementId != undefined) && (parentElementId.indexOf(pic_counter)!= -1)){
 let selectedTextString = selectedText.toString();
 let selectedTextOuterHTML = selectedText.innerHTML;
 let existingSegment = selectedTextString;
@@ -2027,7 +2029,9 @@ let existingSegment = selectedTextString;
             el.style = styleToAdd + ":" + newValue + ";";
             el.tabindex = "1";
             el.addEventListener("click", {stopPropagation: true});
+      //      let input_field_element = document.getElementById(pic_counter + "estrte_input_field");
             let docFrag = document.createDocumentFragment();
+         //   docFrag = input_field_element.createDocumentFragment();
            let node = el;
              let lastNode = docFrag.appendChild(node);
             range.insertNode(docFrag);
@@ -2071,7 +2075,7 @@ setTimeout(function(){elementToFocus.focus();}, 200);
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
 	console.log(estrte_fragments_log);
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML);
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML, pic_counter);
 			document.getElementById(pic_counter + "estrte_fontsSelect").value = "";
 			document.getElementById(pic_counter + "estrte_fontSizeSelect").value = "";
  	document.getElementById(pic_counter + "estrte_undo").style.display = "inline-block";
@@ -2085,6 +2089,10 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
 				range = document.selection().removeAllRanges();
 			}
 		let number_of_edits = estrte_fragments_log.length;
+   }else{
+  document.getElementById(pic_counter + "estrte_input_field").contentEditable = true;
+  document.getElementById(pic_counter + "estrte_input_field").focus();
+   }
  }
 function estrte_format(pic_counter, styleToAdd){
     estrte_color_editing = false;
@@ -2149,6 +2157,7 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
      parentStyle = window.selection().anchorNode.parentElement.style;
 		}
 	}
+   if((parentElementId != undefined) && (parentElementId.indexOf(pic_counter)!= -1)){
 let selectedTextString = selectedText.toString();
 let selectedTextOuterHTML = selectedText.outerHTML;
 let existingSegment = selectedTextString;
@@ -2166,7 +2175,6 @@ let existingSegment = selectedTextString;
 			if(selectedText == ''){
 document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
   let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
-//  let inserted_divs = document.getElementsByClassName("inserted_div");
          let inserted_divsLength = inserted_divs.length;
         for (let i = 0; i < inserted_divsLength; i++){
         	inserted_divs[i].contentEditable = false;
@@ -2308,7 +2316,7 @@ setTimeout(function(){document.getElementById(initialFocus).focus();}, 200);
 	}
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
 	//document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = newInputText;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText); 
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter); 
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
 	console.log(estrte_fragments_log);
@@ -2326,6 +2334,9 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
 		let number_of_edits = estrte_fragments_log.length;
 			
 		existingHTML = document.getElementById(pic_counter + "estrte_input_field").innerHTML;
+   }else{
+  document.getElementById(pic_counter + "estrte_input_field").focus();
+   }
  }
 function estrte_setColor(pic_counter, todo){
   let estrte_to_focus;
@@ -2432,6 +2443,7 @@ if(estrte_colorSelected == 'no'){
         parentInnerHTML = window.getSelection().anchorNode.parentElement.innerHTML;
 		}
 	}
+   if((parentElementId != undefined) && (parentElementId.indexOf(pic_counter)!= -1)){
 let selectedTextString = selectedText.toString();
 let selectedTextOuterHTML = selectedText.innerHTML;
 let existingSegment = selectedTextString;
@@ -2439,7 +2451,7 @@ let existingSegment = selectedTextString;
 			
 			if(selectedText == ''){
 document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
-  let inserted_divs = document.getElementsByClassName("inserted_div");
+  let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
          let inserted_divsLength = inserted_divs.length;
         for (let i = 0; i < inserted_divsLength; i++){
         	inserted_divs[i].contentEditable = false;
@@ -2509,8 +2521,9 @@ estrte_color_editing = estrte_to_focus;
      regExp = new RegExp(/style=""/, 'g');
      newSegmentToEdit = newSegmentToEdit.replace(regExp, '');  
 	 document.getElementById(unix).innerHTML = newSegmentToEdit;
+   }
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText); 
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter);
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
 	console.log(estrte_fragments_log);
@@ -2518,7 +2531,6 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
  	document.getElementById(pic_counter + "estrte_undo").innerHTML = "Undo";
 	let pre_edit_value = estrte_fragments_log[0].pre_edit;
 	let post_edit_value = estrte_fragments_log[0].post_edit;
-			}
 	
 	        if (window.getSelection){
 	            range = window.getSelection().removeAllRanges();   	
@@ -2534,12 +2546,15 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
 			document.getElementById(pic_counter + "estrte_fontsSelect").value = "";
 			document.getElementById(pic_counter + "estrte_fontSizeSelect").value = "";
 		   let newDivColor = newSoFar;
+			}else{
+  document.getElementById(pic_counter + "estrte_input_field").focus();
+   }
 	}else{ 
     let regExp = new RegExp(/rgb\((\d{1,3})\, (\d{1,3})\, (\d{1,3})\)/, 'g');
     let newEditedDivColor = newDivColor.replace(regExp, newColor);  	
     let newNewInputText = newInputText.replace(newDivColor, newEditedDivColor); 
            document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = newInputText;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML)
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML, pic_counter);
 	estrte_fragments_log[0].post_edit = newEditedDivColor;
 }  
 }
@@ -2601,6 +2616,7 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
      parentOuterHTML = window.selection().anchorNode.parentElement.outerHTML;
 		}
 	}
+  if(parentElementId.indexOf(pic_counter)!= -1){
 let selectedTextString = selectedText.toString();
 let selectedTextOuterHTML = selectedText.outerHTML;
 let existingSegment = selectedTextString;
@@ -2618,7 +2634,7 @@ let existingSegment = selectedTextString;
             range = sel.getRangeAt(0);
             range.deleteContents();
 document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
-   inserted_divs = document.getElementsByClassName("inserted_div");
+   inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
           let inserted_divsLength = inserted_divs.length;
         for (let i = 0; i < inserted_divsLength; i++){
         	inserted_divs[i].contentEditable = false;
@@ -2637,8 +2653,9 @@ document.getElementById(pic_counter + "estrte_input_field").contentEditable = fa
             let el = document.createElement("p");
             el.id = unix;
             el.className = "inserted_div";
-            el.addEventListener("click", {stopPropagation: true})
-            el.innerHTML = '<span class="est_placeholder">&nbsp;</span>';
+            el.addEventListener("click", {stopPropagation: true});
+     //       el.innerHTML = '<span class="est_placeholder">&nbsp;</span>';
+            el.innerHTML = '';
             docFrag = document.createDocumentFragment();
             let node = el;
              let lastNode = docFrag.appendChild(node);
@@ -2648,7 +2665,7 @@ document.getElementById(pic_counter + "estrte_input_field").contentEditable = fa
         
             range.insertNode(docFrag);
 			}
-//document.getElementById(unix).addEventListener("keydown", estrte_remove_placeholder, true);
+document.getElementById(unix).addEventListener("keydown", estrte_remove_placeholder, true);
 document.getElementById(unix).contentEditable = true;
 setTimeout(function(){document.getElementById(unix).focus();}, 200);
           }
@@ -2664,7 +2681,7 @@ setTimeout(function(){document.getElementById(unix).focus();}, 200);
 			document.getElementById(pic_counter + "estrte_fontSizeSelect").value = "";
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
 //document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = newInputText;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText); 
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter); 
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
  	document.getElementById(pic_counter + "estrte_undo").style.display = "inline-block";
@@ -2684,6 +2701,9 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
 		let number_of_edits = estrte_fragments_log.length;
 			
 		existingHTML = document.getElementById(pic_counter + "estrte_input_field").innerHTML;
+			}else{
+  document.getElementById(pic_counter + "estrte_input_field").focus();
+   }
 }
  
 function estrte_undo(pic_counter){
@@ -2691,7 +2711,7 @@ function estrte_undo(pic_counter){
 	let editFrom = estrte_fragments_log[0].post_edit;
 	let editTo = estrte_fragments_log[0].pre_edit;
            document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = editTo;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML)
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML, pic_counter);
  estrte_fragments_log.shift();
  if(estrte_fragments_log.length == 0){
  	document.getElementById(pic_counter + "estrte_undo").style.display = "none";
@@ -2708,15 +2728,15 @@ let new_undo_log = {"pre_edit": editFrom, "post_edit": editTo, "type_of_edit": "
  	document.getElementById(pic_counter + "estrte_redo").innerHTML = "Redo ";
  	document.getElementById(pic_counter + "estrte_redo").style.display = "inline-block";
 	}
-           document.getElementById(pic_counter + "estrte_content_wrapper").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
-           document.getElementById(pic_counter + "estrte_input_cont").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
+      //     document.getElementById(pic_counter + "estrte_content_wrapper").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
+     //      document.getElementById(pic_counter + "estrte_input_cont").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
 }
 function estrte_redo(pic_counter){
     estrte_color_editing = false;
 	 let editTo = estrte_undo_log[0].post_edit;
 	let editFrom = estrte_undo_log[0].pre_edit;
            document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = editFrom;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML) 
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML, pic_counter) 
  estrte_undo_log.shift();
  if(estrte_undo_log.length == 0){
  	document.getElementById(pic_counter + "estrte_redo").style.display = "none";
@@ -2735,8 +2755,8 @@ estrte_fragments_log.unshift(new_log);
         document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", document.getElementById(pic_counter + "estrte_input_field").focus());
 			let existingHTML = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
 	        let tempAfterDelete = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
-           document.getElementById(pic_counter + "estrte_content_wrapper").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
-           document.getElementById(pic_counter + "estrte_input_cont").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
+    //       document.getElementById(pic_counter + "estrte_content_wrapper").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
+    //       document.getElementById(pic_counter + "estrte_input_cont").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
 }
 
 function add_table(pic_counter){
@@ -2787,7 +2807,7 @@ let unix =  pic_counter.toString() +  Math.round(+date / 1000);
 	}
 		table_html += '</tbody></table>';
 document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
-  let inserted_divs = document.getElementsByClassName("inserted_div");
+  let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
          let inserted_divsLength = inserted_divs.length;
         for(let i = 0; i < inserted_divsLength; i++){
         inserted_divs[i].contentEditable = false;
@@ -2817,6 +2837,7 @@ this_table_html = this_table_html.replace('#placeholder#', pic_counter);
             el.innerHTML = this_table_html;
             el.id = unix;
             el.className = "inserted_div";
+            el.addEventListener("click", {stopPropagation: true});
            let node = el;
             if(insertAfterElement == ''){
             document.getElementById(pic_counter + "estrte_input_field").appendChild(node);
@@ -2828,7 +2849,7 @@ this_table_html = this_table_html.replace('#placeholder#', pic_counter);
 	cellWidth = cellWidth.substring(0, cellWidth.indexOf("px"));
 	document.getElementById(pic_counter + "table_header" + unix).style.width = (cellWidth * no_of_columns) + "px";
 
-    inserted_divs = document.getElementsByClassName("inserted_div");
+    inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
         first_layer_inserted_elements = new Array();
           inserted_divsLength = inserted_divs.length;
          			 insertAfterElement = inserted_divs[inserted_divsLength - 1];
@@ -2839,6 +2860,7 @@ this_table_html = this_table_html.replace('#placeholder#', pic_counter);
             el.className = "inserted_div";
             el.innerHTML = '<span class="est_placeholder">&nbsp;</span>';
             el.addEventListener("click", {stopPropagation: true});
+document.getElementById(unix + "b").addEventListener("keydown", estrte_remove_placeholder, true);
             if(styledElement){
 			el.style = styledElement.style.cssText;
 	}
@@ -2852,7 +2874,7 @@ setTimeout(function(){document.getElementById(unix + "b").focus();}, 200);
 			document.getElementById(pic_counter + "estrte_fontSizeSelect").value = "";
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
 //document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = newInputText;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText);
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter);
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
  	document.getElementById(pic_counter + "estrte_undo").style.display = "inline-block";
@@ -2883,9 +2905,18 @@ let unix =  pic_counter.toString() +  Math.round(+date / 1000);
 let link_html = '<a href=' + link_url + '>' + link_text + '</a>';
     
     
-let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
-   let first_layer_inserted_elements = new Array();
+document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
+  let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
          let inserted_divsLength = inserted_divs.length;
+        for(let i = 0; i < inserted_divsLength; i++){
+        inserted_divs[i].contentEditable = false;
+        inserted_divs[i].addEventListener("click", function(){inserted_divs[i].contentEditable = true});
+        }
+    document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
+    
+   inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
+   let first_layer_inserted_elements = new Array();
+         inserted_divsLength = inserted_divs.length;
           if(inserted_divsLength == 0){
           	if(document.getElementById(pic_counter + "estrte_input_field").children.length > 0){
              insertAfterElement = document.getElementById(pic_counter + "estrte_input_field").firstChild;
@@ -2908,7 +2939,7 @@ let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").
     insertAfter(node, insertAfterElement);
 	}
     
-   inserted_divs = document.getElementsByClassName("inserted_div");
+   inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
       first_layer_inserted_elements = new Array();
           inserted_divsLength = inserted_divs.length;
          			 insertAfterElement = inserted_divs[inserted_divsLength - 1];
@@ -2919,6 +2950,7 @@ let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").
             el.className = "inserted_div";
             el.innerHTML = '<span class="est_placeholder">&nbsp;</span>';
             el.addEventListener("click", {stopPropagation: true});
+document.getElementById(unix + "c").addEventListener("keydown", estrte_remove_placeholder, true);
             if(styledElement){
 			el.style = styledElement.style.cssText;
 	}
@@ -2931,7 +2963,7 @@ setTimeout(function(){document.getElementById(unix + "c").focus();}, 200);
 			document.getElementById(pic_counter + "estrte_fontsSelect").value = "";
 			document.getElementById(pic_counter + "estrte_fontSizeSelect").value = "";
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText);
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter);
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
  	document.getElementById(pic_counter + "estrte_undo").style.display = "inline-block";
@@ -3053,7 +3085,7 @@ document.getElementById(pic_counter + "estrte_select_features_div").style.displa
  	document.getElementById(pic_counter + "blueComp").value = newBlueValue;
  	newColor = "rgb(" + newRedValue + ", " + newGreenValue + ", " + newBlueValue + ")";
 	document.getElementById(pic_counter + "estrte_color_monitor").style.backgroundColor = newColor;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML);
+           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML, pic_counter);
      if(estrte_action == "set_background"){
   document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor = newColor;
      } else {
@@ -3077,16 +3109,16 @@ document.getElementById(pic_counter + "estrte_select_features_div").style.displa
  	let newBlueValue;
  	let shade = document.getElementById(pic_counter + "shadeComp").value;
  	let preColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
-           document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML) 
  	let newColor = "rgb(" + red + ", " + green + ", " + blue + ")";
  	document.getElementById(pic_counter + "tempRed").value = red;
  	document.getElementById(pic_counter + "tempGreen").value = green;
  	document.getElementById(pic_counter + "tempBlue").value = blue;
- 	document.getElementById(pic_counter + "shadeComp").value = shade;	
+ 	document.getElementById(pic_counter + "shadeComp").value = shade;
  	document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor = document.getElementById(pic_counter + "estrte_color_monitor").style.backgroundColor;
  	document.getElementById(pic_counter + "estrte_input_cont").style.backgroundColor = document.getElementById(pic_counter + "estrte_color_monitor").style.backgroundColor;
  	document.getElementById(pic_counter + "estrte_content_wrapper").style.backgroundColor = document.getElementById(pic_counter + "estrte_color_monitor").style.backgroundColor;
  	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
+    document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML, pic_counter);
     new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Background Edit"};
 	estrte_fragments_log.unshift(new_log);
  	document.getElementById(pic_counter + "estrte_undo").style.display = "inline-block";
@@ -3116,7 +3148,7 @@ document.getElementById(pic_counter + "estrte_select_features_div").style.displa
  	document.getElementById(pic_counter + "tempGreen").value = green;
  	document.getElementById(pic_counter + "tempBlue").value = blue;
  	document.getElementById(pic_counter + "shadeComp").value = 50;
- 	estrte_setColor(pic_counter);
+ 	estrte_setColor(pic_counter, 'color');
  }
  function estrte_setContentShade(pic_counter)
  {
@@ -3204,7 +3236,9 @@ estrte_select_features_divs[i].style.display = "none";
   return node;
 }
 
-document.addEventListener("keyup", (function(event){
+estrte_input_fields = document.getElementsByClassName("estrte_input_field");
+        for(let i = 0; i < estrte_input_fields.length; i++){
+           estrte_input_fields[i].addEventListener("keyup", (function(event){
 this_pic_counter = event.target.id.substring(0, 4);
 let existingHTML;
 let newInputText;
@@ -3228,8 +3262,7 @@ if(estrte_fragments_log.length > 0){
  	document.getElementById(this_pic_counter + "estrte_undo").style.display = "inline-block";
  	document.getElementById(this_pic_counter + "estrte_undo").innerHTML = "Undo";
 	newInputText = document.getElementById(this_pic_counter + "estrte_content_wrapper").innerHTML;
-	document.getElementById(this_pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText); 
-//  alert("up then active " + document.activeElement.id);
+	document.getElementById(this_pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, this_pic_counter); 
   if(document.activeElement.id == null){
   }
   if(document.activeElement.id == ""){
@@ -3237,6 +3270,8 @@ if(estrte_fragments_log.length > 0){
 	}else{
 	}
 }));
+        }
+
 document.addEventListener("keydown", (function(event){
 this_pic_counter = event.target.id.substring(0, 1);
     estrte_color_editing = false;
