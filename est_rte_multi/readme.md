@@ -8,8 +8,9 @@ It is advisable to include the following in the section in order to compensate f
 
 ii) At each place on the page where you wish to place the rich text editor input control: include - 'est_rte_multi/estrte_form.html'
 
-ii) This is where it gets slightly more complicated: The first occurance of the Rich Text Element on the page must be indexed at 1000 and each additional occurance incremented by 1.
+ii) This is where it gets slightly more complicated: Each occurance of the Rich Text Element on the page must have a unique 4 digit.
       ie change "%%placeholder%%" on estrte_form.html to the appropriate index.
+If the web page is generated dynamically - it is a good idea to increment the index by 1 for each occurance
       As an example from my scenicireland.co.uk picture blog site written in core PHP:
       
         $pic_counter = 1000;
