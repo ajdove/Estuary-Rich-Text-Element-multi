@@ -2184,8 +2184,8 @@ document.getElementById(pic_counter + "estrte_input_field").addEventListener("cl
         let already = false;
 			let sel = window.getSelection();
             	let initialFocus = unix;
-          if (sel.getRangeAt && sel.rangeCount) {
-            if(parentElementTagName.toLowerCase() != styleToAdd){  
+          if(sel.getRangeAt && sel.rangeCount) {
+            if(parentElementTagName.toLowerCase() != styleToAdd){
           let thisResult = ancestor(document.getElementById(parentElementId), styleToAdd);
         		if(thisResult == null){
 				            range = sel.getRangeAt(0);
@@ -2205,7 +2205,7 @@ document.getElementById(pic_counter + "estrte_input_field").addEventListener("cl
               sel.removeAllRanges();
 document.getElementById(pic_counter + "format" + styleToAdd).style.fontWeight = "bold";
 			}else{
-				let thisFirstElementChild = thisResult.firstElementChild;
+				let thisNextElementChild = thisResult;
 				let thisFirstElementChildTagName = thisResult.firstElementChild.tagName;
 				let thisFirstElementChildStyle = thisResult.firstElementChild.style.cssText;
 		            range = sel.getRangeAt(0);
@@ -2220,14 +2220,11 @@ document.getElementById(pic_counter + "format" + styleToAdd).style.fontWeight = 
            let node = el;
              let lastNode = docFrag.appendChild(node);
     insertAfter(node, document.getElementById(thisResult.id));
-            
-              
-              let childCounter = 1;
-            while(thisFirstElementChild.firstElementChild != null){
-            let firstElementChildTagName = thisFirstElementChild.firstElementChild.tagName;
-            let firstElementChildStyle = thisFirstElementChild.firstElementChild.style.cssText;
-            thisFirstElementChild = thisFirstElementChild.firstElementChild;
-       //     alert(firstElementChildTagName + " - " + firstElementChildStyle + " - " + thisFirstElementChild);
+            let childCounter = 1;
+            do{
+            let firstElementChildTagName = thisNextElementChild.firstElementChild.tagName;
+            let firstElementChildStyle = thisNextElementChild.firstElementChild.style.cssText;
+            thisNextElementChild = thisNextElementChild.firstElementChild;
            let childEl = document.createElement(firstElementChildTagName);
             childEl.innerHTML = '';
             childEl.id = unix + childCounter.toString();
@@ -2241,9 +2238,11 @@ document.getElementById(pic_counter + "format" + styleToAdd).style.fontWeight = 
        if(document.getElementById(unix + (childCounter - 1).toString()) != null){
               document.getElementById(unix + (childCounter - 1).toString()).appendChild(childNode);
 						}
+			//  thisNextElementChild = thisNextElementChild.firstElementChild;
               childCounter ++;
-            }  //end while
-              
+            }
+            while(thisNextElementChild.firstElementChild != null);
+       //     while(thisNextElementChild != null);
               range = range.cloneRange();
               range.setStartAfter(lastNode);
               range.collapse(true);
@@ -2283,11 +2282,14 @@ document.getElementById(pic_counter + "format" + styleToAdd). style.fontWeight =
 document.getElementById(pic_counter + "format" + styleToAdd).style.fontWeight = "normal";
 			}
 		}
-              sel.addRange(range);
+            sel.addRange(range);
             style_added = true;
             if(document.getElementById(initialFocus) != null){
 document.getElementById(initialFocus).contentEditable = true;
 setTimeout(function(){document.getElementById(initialFocus).focus();}, 200);
+		}else{
+document.getElementById(unix).contentEditable = true;
+setTimeout(function(){document.getElementById(unix).focus();}, 200);
 		}
     }else{
 	if(parentElementTagName.toLowerCase() != styleToAdd.toLowerCase()){
@@ -2654,7 +2656,7 @@ document.getElementById(pic_counter + "estrte_input_field").contentEditable = fa
             el.id = unix;
             el.className = "inserted_div";
             el.addEventListener("click", {stopPropagation: true});
-     //       el.innerHTML = '<span class="est_placeholder">&nbsp;</span>';
+            el.innerHTML = '<span class="est_placeholder">-</span>';
             el.innerHTML = '';
             docFrag = document.createDocumentFragment();
             let node = el;
@@ -2858,15 +2860,14 @@ this_table_html = this_table_html.replace('#placeholder#', pic_counter);
             el = document.createElement("div");
             el.id = unix + "b";
             el.className = "inserted_div";
-            el.innerHTML = '<span class="est_placeholder">&nbsp;</span>';
+            el.innerHTML = '<span class="est_placeholder">-</span>';
             el.addEventListener("click", {stopPropagation: true});
-document.getElementById(unix + "b").addEventListener("keydown", estrte_remove_placeholder, true);
             if(styledElement){
 			el.style = styledElement.style.cssText;
 	}
             node = el;
     insertAfter(node, insertAfterElement);
-document.getElementById(unix + "b").addEventListener("keyup", estrte_remove_placeholder, true);
+document.getElementById(unix + "b").addEventListener("keydown", estrte_remove_placeholder, true);
 document.getElementById(unix + "b").contentEditable = true;
 setTimeout(function(){document.getElementById(unix + "b").focus();}, 200);
 
@@ -2948,9 +2949,9 @@ document.getElementById(pic_counter + "estrte_input_field").contentEditable = fa
            el = document.createElement("div");
             el.id = unix + "c";
             el.className = "inserted_div";
-            el.innerHTML = '<span class="est_placeholder">&nbsp;</span>';
+            el.innerHTML = '<span class="est_placeholder">-</span>';
             el.addEventListener("click", {stopPropagation: true});
-document.getElementById(unix + "c").addEventListener("keydown", estrte_remove_placeholder, true);
+//document.getElementById(unix + "c").addEventListener("keydown", estrte_remove_placeholder, true);
             if(styledElement){
 			el.style = styledElement.style.cssText;
 	}
