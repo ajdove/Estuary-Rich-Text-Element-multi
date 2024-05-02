@@ -7,32 +7,10 @@ const estrte_default_text_color = "75, 75,75";
 const estrte_default_background_color = "255, 255, 255";
 const estrte_default_font = "Arial";
 const estrte_default_font_size = "16";
-
-const estrte_toggle_speed = 700; // number of milliseconds for toggle elements such as "show colors" ans "show emojis" to open / close.
+const estrte_animation_dur = 148;
 const estrte_emoji_categories = ["symbols", "faces", "people", "animals", "nature", "activity", "objects", "food", "travel"];
 
-let estrte_select_colour_div_html = '<div class="table_spec_form" id="#placeholder#link_spec_form"><div id="#placeholder#table_spec_heading">Colours<span class="close_window" title="Close" onclick="close_select_features_div()">x</span></div>';
-estrte_select_colour_div_html +='<div class="estrte_color_pallette" id="#placeholder#estrte_color_pallette">';
-estrte_select_colour_div_html += '<div class="estrte_colorRowCont"><div class="estrte_setColorRow" id="#placeholder#estrte_setColorRow"></div>';
-estrte_select_colour_div_html += '<div class="estrte_lowerSetColorRow" class="estrte_lowerSetColorRow" id="#placeholder#estrte_lowerSetColorRow"></div>';
-estrte_select_colour_div_html += '</div>';
-estrte_select_colour_div_html += '<div class="estrte_slidecontainer" contentEditable = false><label for="redComp" class="estrte_colorLabel" inputmode="none" contentEditable = false>Red</label><input type="range" class="estrte_toolbar_slider" min="0" max="255" value="';
-//estrte_select_colour_div_html += estrte_textColorArray[0];
-estrte_select_colour_div_html += '" step=1 class="slider" name="redComp" id="#placeholder#redComp" inputmode="none" oninput="estrte_setColor(#placeholder#, \'red\')">';
-estrte_select_colour_div_html += '<label for="greenComp" class="estrte_colorLabel" inputmode="none" contentEditable = false>Green</label><input type="range" class="estrte_toolbar_slider" min="0" max="255" value="'
-//estrte_select_colour_div_html += estrte_textColorArray[1];
-estrte_select_colour_div_html += '" step=1 class="slider" name="greenComp" id="#placeholder#greenComp" inputmode="none" oninput="estrte_setColor(#placeholder#, \'green\')">';
-estrte_select_colour_div_html += '<label for="blueComp" class="estrte_colorLabel" inputmode="none" contentEditable = false>Blue</label><input type="range" class="estrte_toolbar_slider" min="0" max="255" value="'
-//estrte_select_colour_div_html += estrte_textColorArray[2];
-estrte_select_colour_div_html += '" step=1 class="slider" name="blueComp" id="#placeholder#blueComp" inputmode="none" oninput="estrte_setColor(#placeholder#, \'blue\')">';
-estrte_select_colour_div_html += '<label for="shadeComp" class="estrte_colorLabel" inputmode="none" contentEditable = false>Shade</label><input type="range" class="estrte_toolbar_slider" min="0" max="100" value="50" step=1 class="slider" name="shadeComp" id="#placeholder#shadeComp" inputmode="none" oninput="estrte_setColor(#placeholder#, \'shade\')">';
-estrte_select_colour_div_html += '<input type="hidden" name="tempRed" id="#placeholder#tempRed" value="u" /><input type="hidden" name="tempGreen" id="#placeholder#tempGreen" value="u" /><input type="hidden" name="tempBlue" id="#placeholder#tempBlue" value="u" />';
-estrte_select_colour_div_html += '</div>';
-estrte_select_colour_div_html += '</div>';
-estrte_select_colour_div_html += '<div class="estrte_colorPickerDivLower" id="#placeholder#estrte_colorPickerDivLower"><label class="estrte_setTextColorLabel" id="#placeholder#estrte_setTextColorLabelColor" onclick="estrte_setColor(\'color\')">Set Color</label>';
-estrte_select_colour_div_html += '<label class="estrte_setTextColorLabel" id="#placeholder#estrte_setTextColorLabelBgColor" onclick="estrte_setBackgroundColor(#placeholder#)">Set Background</label></div></div>';
-
-          let table_html = '<div class="table_spec_form" id="#placeholder#table_spec_form"><div id="#placeholder#table_spec_heading">Table Properties<span class="close_window" title="Close" onclick="close_select_features_div()">x</span></div>';
+    let table_html = '<div class="table_spec_form" id="#placeholder#table_spec_form"><div class="spec_features_head">Table Properties<span class="close_window" title="Close" inputmode="none" unselectable="on" onclick="close_select_features_div(#placeholder#)"><img src="/est_rte_multi/images/close_menu.png" alt="" /></span></div>';
             table_html += '<div class="table_spec_row"><div class="table_spec_caption"><label>Heading</label></div><div class="table_spec_input"><input type="text" name="table_caption" id="#placeholder#table_caption" /></div></div>';
             table_html += '<div class="table_spec_row"><div class="table_spec_caption"><label>Rows</label></div><div class="table_spec_input"><select name="no_of_rows_select" id="#placeholder#no_of_rows_select"></select></div></div>';
             table_html += '<div class="table_spec_row"><div class="table_spec_caption"><label>Columns</label></div><div class="table_spec_input"><select name="no_of_columns_select" id="#placeholder#no_of_columns_select"></select></div></div>';
@@ -42,7 +20,7 @@ estrte_select_colour_div_html += '<label class="estrte_setTextColorLabel" id="#p
             table_html += '<div class="table_spec_row"><div class="table_spec_caption"><label>Headers</label></div><div class="table_spec_input"><select name="select_headers" id="#placeholder#select_headers"><option value="">None</option><option value="firstRow">First Row</option><option value="firstColumn">First Column</option><option value="both">Both</option></select></div></div>';
             table_html += '<div class="table_spec_row"><div class="table_spec_caption"><label id="#placeholder#addTableButton" unselectable="on" onclick="add_table(#placeholder#)">Add</label></div></div></div>';
 
-let link_html = '<div class="table_spec_form" id="#placeholder#link_spec_form"><div id="#placeholder#table_spec_heading">Add Link<span class="close_window" title="Close" onclick="close_select_features_div()">x</span></div>';
+let link_html = '<div class="table_spec_form" id="#placeholder#link_spec_form"><div class="spec_features_head">Add Link<span class="close_window" title="Close" inputmode="none" unselectable="on" onclick="close_select_features_div(#placeholder#, 1000)"><img src="/est_rte_multi/images/close_menu.png" alt="" /></span></div>';
 link_html += '<div class="table_spec_row"><div class="table_spec_caption"><label>Text</label></div><div class="table_spec_input"><input type="text" name="link_text" id="#placeholder#link_text" /></div></div>';
 link_html += '<div class="table_spec_row"><div class="table_spec_caption"><label>URL</label></div><div class="table_spec_input"><input type="text" name="link_url" id="#placeholder#link_url" /></div></div>';
 link_html += '<div class="table_spec_row"><div class="table_spec_caption"><div class="table_spec_input"><label id="#placeholder#addTableButton" unselectable="on" onclick="add_link(#placeholder#)">Add</label></div></div></div></div>';
@@ -1761,28 +1739,119 @@ let table_spec_active = false;
 let link_spec_active = false;
 let estrte_color_editing = false;
 let pic_counter_master;
+let currentCursorPos;
 
+// test functions
+
+function slideDown(pic_counter, value){
+    target = document.getElementById(pic_counter + "estrte_select_features_div");
+    target.style.removeProperty('display');
+    let display = window.getComputedStyle(target).display;
+    let toolbar = document.getElementById(pic_counter + "estrte_toolbar");
+    let targetWidth = window.getComputedStyle(toolbar).width;
+  if (display === 'none')
+      display = 'block';
+
+    target.style.height = 0;
+    target.style.display = display;
+    let height = target.offsetHeight;
+    target.style.position = "relative";  // can be changed to absolue if 
+  //  target.style.width = targetWidth;
+    target.style.width = '100%';
+    target.style.transitionProperty = 'height, margin, padding';
+    target.style.transitionDuration = estrte_animation_dur + 'ms';
+    target.style.overflow = 'hidden';
+    target.style.height = value;
+    target.style.paddingTop = 0;
+    target.style.paddingBottom = 0;
+    target.style.marginTop = 0;
+    target.style.marginBottom = 0;
+    target.offsetHeight;
+    target.style.boxSizing = 'border-box';
+ //   target.style.height = height + 'px';
+    target.style.removeProperty('padding-top');
+    target.style.removeProperty('padding-bottom');
+    target.style.removeProperty('margin-top');
+    target.style.removeProperty('margin-bottom');
+    window.setTimeout( () => {
+    target.style.height = 'auto';
+  //    target.style.removeProperty('height');
+      target.style.removeProperty('overflow');
+      target.style.removeProperty('transition-duration');
+      target.style.removeProperty('transition-property');
+    }, estrte_animation_dur);
+  }
+
+function getCaretPosition(ctrl) {
+    // IE < 9 Support 
+    if (document.selection) {
+        ctrl.focus();
+        var range = document.selection.createRange();
+        var rangelen = range.text.length;
+        range.moveStart('character', -ctrl.value.length);
+        var start = range.text.length - rangelen;
+        return {
+            'start': start,
+            'end': start + rangelen
+        };
+    } // IE >=9 and other browsers
+    else if (ctrl.selectionStart || ctrl.selectionStart =='0'){
+        return {
+         //   'start': ctrl.selectionStart,
+         //   'end': ctrl.selectionEnd
+            'start': ctrl.innerHTML.length,
+            'end': ctrl.innerHTML.length
+        };
+    } else {
+        return {
+        //    'start': 0,
+        //    'end': 0
+            'start': ctrl.innerHTML.length,
+            'end': ctrl.innerHTML.length
+        };
+    }
+}
+
+function setCaretPosition(ctrl, start, end) {
+    // IE >= 9 and other browsers
+    if (ctrl.setSelectionRange) {
+        ctrl.focus();
+        ctrl.setSelectionRange(start, end);
+    }
+    // IE < 9 
+    else if (ctrl.createTextRange) {
+        var range = ctrl.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', end);
+        range.moveStart('character', start);
+        range.select();
+    }
+}          
 function estrte_show_select_special_characters_div(pic_counter){
     estrte_color_editing = false;
-document.getElementById(pic_counter + "estrte_select_features_div").style.display = "block";
-document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = '<div class="table_spec_form" id="link_spec_form"><div id="table_spec_heading">Special Characters<span class="close_window" title="Close" onclick="close_select_features_div(' + pic_counter + ')">x</span></div><div class="estrte_special_charsInput" id="#placeholder#estrte_special_chars"></div></div>';
-let special_select_html = document.getElementById(pic_counter + "estrte_select_features_div").innerHTML;
-let this_special_select_html = special_select_html.replace('#placeholder#', pic_counter);
+//document.getElementById(pic_counter + "estrte_select_features_div").style.display = "block";
+let thisTarget = document.getElementById(pic_counter + "estrte_select_features_div");
+slideDown(pic_counter, "520px");
+document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = '<div class="table_spec_form" id="#placeholder#spec_chars_list"><div class="spec_features_head" id="table_spec_heading">Special Chars<span class="close_window" title="Close" inputmode="none" unselectable="on" onclick="close_select_features_div(\'#placeholder#\',)"><img src="/est_rte_multi/images/close_menu.png" alt="" /></span></div><div class="estrte_special_charsInput" id="#placeholder#estrte_special_chars"></div></div>';
+let this_special_select_html = document.getElementById(pic_counter + "estrte_select_features_div").innerHTML;
+while(this_special_select_html.indexOf('#placeholder#') != -1){
+      this_special_select_html = this_special_select_html.replace('#placeholder#', pic_counter);
+	}
 document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = this_special_select_html;
 estrte_special_chars.forEach((specialChar) => {
        document.getElementById(pic_counter + "estrte_special_chars").appendChild(generateSpecialcharIcon(specialChar, pic_counter));
 		});
-        document.getElementById(pic_counter + "estrte_input_field").addEventListener("keyup", function () {
+        document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", function () {
             close_select_features_div(pic_counter);
         });
 }
 
 function estrte_show_select_estrte_emojis_div(pic_counter){
-let estrte_emojis_list_html = '<div id="#placeholder#estrte_emojis_list"><span class="close_window" title="Close" onclick="close_select_features_div(' + pic_counter + ')">x</span><div class="estrte_emojis_category" id="#placeholder#emojisgeneral" inputmode="none" unselectable="on"><div class="estrte_emojis_category_show" class="emojis_showgeneral" id="#placeholder#emojis_showgeneral"></div></div>';
+let estrte_emojis_list_html = '<div id="#placeholder#estrte_emojis_list" class="table_spec_form"><div class="spec_features_head" id="table_spec_heading">Emojis<span class="close_window" title="Close" inputmode="none" unselectable="on" onclick="close_select_features_div(\'#placeholder#\')"><img src="/est_rte_multi/images/close_menu.png" alt="" /></span></div><div class="estrte_emojis_category" id="#placeholder#emojisgeneral" inputmode="none" unselectable="on"><div class="estrte_emojis_category_show" class="emojis_showgeneral" id="#placeholder#emojis_showgeneral"></div></div>';
 for (let i = 0; i < estrte_emoji_categories.length; i++){
       var category = estrte_emoji_categories[i];
       estrte_emojis_list_html += '<div class="estrte_emojis_category" id="#placeholder#emojis'+ category + '" inputmode="none" unselectable="on"><label>' + category + '&nbsp;</label><div class="estrte_emojis_category_show" id="#placeholder#emojis_show'+ category + '"></div></div>';
-        document.getElementById(pic_counter + "estrte_input_field").addEventListener("keyup", function () {
+        document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", function () {
             close_select_features_div(pic_counter);
         });
 }
@@ -1792,7 +1861,8 @@ while(this_estrte_emojis_list_html.indexOf('#placeholder#') != -1){
 this_estrte_emojis_list_html = this_estrte_emojis_list_html.replace('#placeholder#', pic_counter);
 }
 document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = this_estrte_emojis_list_html;
-document.getElementById(pic_counter + "estrte_select_features_div").style.display = "block";
+let thisTarget = document.getElementById(pic_counter + "estrte_select_features_div");
+slideDown(pic_counter, "520px");
 estrte_emojis.forEach((emoji) => {
 	var category = emoji.category;
 	if(category == "general"){
@@ -1859,13 +1929,13 @@ function insertAfter(newNode, existingNode) {
 	return;
       }
 
-      function addTableToDiv(event) {
+function addTableToDiv(event) {
         let estrte_input_field = document.getElementById(pic_counter + "estrte_input_field");
         estrte_input_field.focus();
        let table_html = document.getElementById("table_html_hidden").value;
         pasteHtmlAtCaret(table_html, pic_counter);
       }
-      function generateEmojiIcon(emoji, title, pic_counter) {
+function generateEmojiIcon(emoji, title, pic_counter) {
         pic_counter = pic_counter;
         let date = new Date();
         let unix =  pic_counter.toString() +  Math.round(+date / 1000);
@@ -1877,12 +1947,12 @@ function insertAfter(newNode, existingNode) {
         input.innerText = {emoji};//caption on button
         input.addEventListener("click", function(){
         let estrte_input_field = document.getElementById(pic_counter + "estrte_input_field");
-        estrte_input_field.focus();
         pasteHtmlAtCaret(emoji, pic_counter);
+        close_select_features_div(pic_counter);
         });
         return input;
 }
-      function generateSpecialcharIcon(specChar, pic_counter) {
+function generateSpecialcharIcon(specChar, pic_counter) {
                     const date = new Date();
 const unix =  pic_counter.toString() +  Math.round(+date / 1000);
         let input = document.createElement("input");
@@ -1892,8 +1962,9 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
         input.innerText = specChar;//caption on button
         input.addEventListener("click", function(){
         let estrte_input_field = document.getElementById(pic_counter + "estrte_input_field");
-        estrte_input_field.focus();
+    //    estrte_input_field.focus();
         pasteHtmlAtCaret(`${specChar}`, pic_counter);
+        close_select_features_div(pic_counter);
         });
         return input;
       }
@@ -1958,6 +2029,8 @@ existingHTML = document.getElementById(thisParentElementId).innerHTML;
 newHTML = existingHTML.replace('<span class="est_placeholder">-</span>', '');
 document.getElementById(thisParentElementId).innerHTML = newHTML;
 document.getElementById(thisParentElementId).removeEventListener("keydown", estrte_remove_placeholder, true);
+document.getElementById(thisParentElementId).removeEventListener("touchstart", estrte_remove_placeholder, true);
+document.getElementById(thisParentElementId).removeEventListener("click", estrte_remove_placeholder, true);
 return;
 		}
 	}
@@ -1967,6 +2040,7 @@ function estrte_set_current_style(pic_counter, styleToAdd, newValue){
 document.getElementById(pic_counter + "estrte_input_field").style.styleToAdd = newValue;
 }
 function estrte_add_style(pic_counter, styleToAdd, newValue){
+estrte_remove_placeholder();
     estrte_color_editing = false;
   let estrte_prevDelete = 'no';
   let selectedText;
@@ -2003,7 +2077,7 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
 	            }  else{
         parentElementId =  document.getSelection().anchorNode.parentElement.id;
         parentElementTagName =  document.getSelection().anchorNode.parentElement.tagName;
-        parentInnerHTML = window.getSelection().anchorNode.parentElement.innerHTML;
+        parentInnerHTML = document.getSelection().anchorNode.parentElement.innerHTML;
 		}
 			}else if (document.selection){
 			selectedText = document.selection();
@@ -2012,7 +2086,7 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
 	            } else{ 
         parentElementId =  document.selection().anchorNode.parentElement.id;
         parentElementTagName =  document.selection().anchorNode.parentElement.tagName;
-        parentInnerHTML = window.getSelection().anchorNode.parentElement.innerHTML;
+        parentInnerHTML = document.getSelection().anchorNode.parentElement.innerHTML;
 		}
 	}
    if((parentElementId != undefined) && (parentElementId.indexOf(pic_counter)!= -1)){
@@ -2105,6 +2179,7 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
    }
  }
 function estrte_format(pic_counter, styleToAdd){
+estrte_remove_placeholder();
     estrte_color_editing = false;
   let existingHTML;
   let estrte_prevDelete = 'no';
@@ -2131,7 +2206,7 @@ function estrte_format(pic_counter, styleToAdd){
                     const date = new Date();
 const unix =  pic_counter.toString() +  Math.round(+date / 1000);
 	        if (window.getSelection){
-	           selectedText = window.getSelection();  
+	           selectedText = window.getSelection();
 	            if(selectedText.anchorNode == null){
 	            	let selectionNull = true;
 	            } else{
@@ -2147,24 +2222,24 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
 	            if(selectedText.anchorNode == null){
 	            	let selectionNull = true;
 	            }  else{
-	    anchorNode = window.getSelection().anchorNode.parentElement;
+	    anchorNode = document.getSelection().anchorNode.parentElement;
         parentElementId =  document.getSelection().anchorNode.parentElement.id;
        parentElementTagName =  document.getSelection().anchorNode.parentElement.tagName;
         parentInnerHTML = document.getSelection().anchorNode.parentElement.innerHTML;
      parentOuterHTML = document.getSelection().anchorNode.parentElement.outerHTML;
-     parentStyle = window.getSelection().anchorNode.parentElement.style;
+     parentStyle = document.getSelection().anchorNode.parentElement.style;
 		}
 			}else if (document.selection){
 				selectedText = document.selection();
 	            if(selectedText.anchorNode == null){
 	            	let selectionNull = true;
 	            } else{
-	    anchorNode = window.selection().anchorNode.parentElement;
+	    anchorNode = document.selection().anchorNode.parentElement;
         parentElementId =  document.selection().anchorNode.parentElement.id;
         parentElementTagName =  document.selection().anchorNode.parentElement.tagName;
         parentInnerHTML = document.selection().anchorNode.parentElement.innerHTML;
-     parentOuterHTML = window.selection().anchorNode.parentElement.outerHTML;
-     parentStyle = window.selection().anchorNode.parentElement.style;
+     parentOuterHTML = document.selection().anchorNode.parentElement.outerHTML;
+     parentStyle = document.selection().anchorNode.parentElement.style;
 		}
 	}
    if((parentElementId != undefined) && (parentElementId.indexOf(pic_counter)!= -1)){
@@ -2181,7 +2256,7 @@ let existingSegment = selectedTextString;
 			}
 			let existingFormat = 'style="' + styleToAdd +':' + newValue + ';"';
 				if(parentOuterHTML.indexOf(existingFormat) != -1){
-				}  
+				}
 			if(selectedText == ''){
 document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
   let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
@@ -2189,8 +2264,12 @@ document.getElementById(pic_counter + "estrte_input_field").contentEditable = fa
         for (let i = 0; i < inserted_divsLength; i++){
         	inserted_divs[i].contentEditable = false;
         	inserted_divs[i].addEventListener("click", function(){inserted_divs[i].contentEditable = true});
+        	inserted_divs[i].addEventListener("mousedown", function(){inserted_divs[i].contentEditable = true});
+        	inserted_divs[i].addEventListener("touchstart", function(){inserted_divs[i].contentEditable = true});
         }
 document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
+document.getElementById(pic_counter + "estrte_input_field").addEventListener("mousedown", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
+document.getElementById(pic_counter + "estrte_input_field").addEventListener("touchstart", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
         let already = false;
 			let sel = window.getSelection();
             	let initialFocus = unix;
@@ -2202,9 +2281,11 @@ document.getElementById(pic_counter + "estrte_input_field").addEventListener("cl
             range.deleteContents();
            let el = document.createElement(styleToAdd);
             el.innerHTML = '';
-            el.addEventListener("click", {stopPropagation: true});
             el.id = unix;
             el.className = "inserted_div";
+            el.addEventListener("click", {stopPropagation: true});
+            el.addEventListener("mousedown", {stopPropagation: true});
+            el.addEventListener("touchstart", {stopPropagation: true});
             let docFrag = document.createDocumentFragment();
            let node = el;
              let lastNode = docFrag.appendChild(node);
@@ -2222,10 +2303,12 @@ document.getElementById(pic_counter + "format" + styleToAdd).style.fontWeight = 
             range.deleteContents();
            let el = document.createElement(thisFirstElementChildTagName);
             el.innerHTML = '';
-            el.addEventListener("click", {stopPropagation: true});
             el.id = unix;
             el.style = thisFirstElementChildStyle;
             el.className = "inserted_div";
+            el.addEventListener("click", {stopPropagation: true});
+            el.addEventListener("mousedown", {stopPropagation: true});
+            el.addEventListener("touchstart", {stopPropagation: true});
             let docFrag = document.createDocumentFragment();
            let node = el;
              let lastNode = docFrag.appendChild(node);
@@ -2252,7 +2335,6 @@ document.getElementById(pic_counter + "format" + styleToAdd).style.fontWeight = 
               childCounter ++;
             }
             while(thisNextElementChild.firstElementChild != null);
-       //     while(thisNextElementChild != null);
               range = range.cloneRange();
               range.setStartAfter(lastNode);
               range.collapse(true);
@@ -2327,7 +2409,6 @@ setTimeout(function(){document.getElementById(unix).focus();}, 200);
 		}
 	}
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
-	//document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = newInputText;
            document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter); 
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
@@ -2350,8 +2431,8 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
   document.getElementById(pic_counter + "estrte_input_field").focus();
    }
  }
+ 
 function estrte_setColor(pic_counter, todo){
-  let estrte_to_focus;
   let estrte_prevDelete = 'no';
   let estrte_prevAdd = 'no';
   let selectedText;
@@ -2367,6 +2448,10 @@ function estrte_setColor(pic_counter, todo){
   let red;
   let green;
   let blue;
+  let inserted_divs = [];
+  let inserted_divsLength = [];
+  let elementsArray = [];
+  let newRangecont;
  	red = document.getElementById(pic_counter + "redComp").value;
  	green = document.getElementById(pic_counter + "greenComp").value;
  	blue = document.getElementById(pic_counter + "blueComp").value;
@@ -2425,10 +2510,10 @@ blue = 255 -((225 - tempBlue) * (2 - shade));
        origInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
 	}
                     let date = new Date();
-unix =  pic_counter.toString() +  Math.round(+date / 1000) + Math.floor(Math.random() * 1000);
+unix =  pic_counter.toString() + Math.round(+date / 1000) + Math.floor(Math.random() * 1000);
 if(estrte_colorSelected == 'no'){
 	        if (window.getSelection){
-	            selectedText = window.getSelection();  
+	            selectedText = window.getSelection();
 	            if(selectedText.anchorNode == null){
 	            	let selectionNull = true;
 	            } else{
@@ -2440,10 +2525,10 @@ if(estrte_colorSelected == 'no'){
 				selectedText = document.getSelection();
 	            if(selectedText.anchorNode == null){
 	            	let selectionNull = true;
-	            }  else{
+	            }else{
         parentElementId =  document.getSelection().anchorNode.parentElement.id;
         parentElementTagName =  document.getSelection().anchorNode.parentElement.tagName;
-        parentInnerHTML = window.getSelection().anchorNode.parentElement.innerHTML;
+        parentInnerHTML = document.getSelection().anchorNode.parentElement.innerHTML;
 		}
 			}else if (document.selection){
 				selectedText = document.selection();
@@ -2452,10 +2537,9 @@ if(estrte_colorSelected == 'no'){
 	            } else{ 
         parentElementId =  document.selection().anchorNode.parentElement.id;
         parentElementTagName =  document.selection().anchorNode.parentElement.tagName;
-        parentInnerHTML = window.getSelection().anchorNode.parentElement.innerHTML;
+        parentInnerHTML = document.selection().anchorNode.parentElement.innerHTML;
 		}
 	}
-   if((parentElementId != undefined) && (parentElementId.indexOf(pic_counter)!= -1)){
 let selectedTextString = selectedText.toString();
 let selectedTextOuterHTML = selectedText.innerHTML;
 let existingSegment = selectedTextString;
@@ -2463,31 +2547,55 @@ let existingSegment = selectedTextString;
 			
 			if(selectedText == ''){
 document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
-  let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
-         let inserted_divsLength = inserted_divs.length;
+  inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
+         inserted_divsLength = inserted_divs.length;
         for (let i = 0; i < inserted_divsLength; i++){
         	inserted_divs[i].contentEditable = false;
         	inserted_divs[i].addEventListener("click", function(){inserted_divs[i].contentEditable = true});
+        	inserted_divs[i].addEventListener("mousedown", function(){inserted_divs[i].contentEditable = true});
+        	inserted_divs[i].addEventListener("touchstart", function(){inserted_divs[i].contentEditable = true});
         }
-        document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
+document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
 				if(estrte_color_editing){
-					console.log("estrte_color_editing " + estrte_color_editing);
 				document.getElementById(estrte_color_editing).style.color = newColor;
-setTimeout(function(){document.getElementById(estrte_color_editing).focus();}, 200);
-				estrte_to_focus = estrte_color_editing;
 				}else{
 			let sel = window.getSelection();
           if (sel.getRangeAt && sel.rangeCount) {
+document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
+  inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
+         inserted_divsLength = inserted_divs.length;
+        for (let i = 0; i < inserted_divsLength; i++){
+        	inserted_divs[i].contentEditable = false;
+        	inserted_divs[i].addEventListener("click", function(){inserted_divs[i].contentEditable = true});
+        	inserted_divs[i].addEventListener("mousedown", function(){inserted_divs[i].contentEditable = true});
+        	inserted_divs[i].addEventListener("touchstart", function(){inserted_divs[i].contentEditable = true});
+        }
+   if((parentElementId == undefined) || (parentElementId.indexOf(pic_counter) == -1)){
+  inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
+         inserted_divsLength = inserted_divs.length;
+        newRangecont = elementsArray[elementsArray.length - 1];
+          elementsArray = [pic_counter + "estrte_input_field"];
+        for(let i = 0; i < inserted_divsLength; i++){
+            elementsArray.push(inserted_divs[i].id);
+					}
+         range = document.createRange();
+        range.setStart(document.getElementById(elementsArray[elementsArray.length - 1]), document.getElementById(elementsArray[elementsArray.length - 1]).length - 1);
+			}else{
             range = sel.getRangeAt(0);
+            }
             range.deleteContents();
            let el = document.createElement("div");
             el.innerHTML = '';
-            el.addEventListener("click", {stopPropagation: true});
+            el.innerHTML = '<span class="est_placeholder">-</span>';
             el.id = unix;
             el.className = "inserted_div";
             el.style = "color:" + newColor + ";";
+            el.tabindex = "1";
+            el.addEventListener("click", {stopPropagation: true});
+            el.addEventListener("mousedown", {stopPropagation: true});
+            el.addEventListener("touchstart", {stopPropagation: true});
             let docFrag = document.createDocumentFragment();
-           let node = el;
+            let node = el;
              let lastNode = docFrag.appendChild(node);
             range.insertNode(docFrag);
               range = range.cloneRange();
@@ -2495,20 +2603,26 @@ setTimeout(function(){document.getElementById(estrte_color_editing).focus();}, 2
               range.collapse(true);
               sel.removeAllRanges();
               sel.addRange(range);
-              estrte_to_focus = unix;
-document.getElementById(unix).contentEditable = true;
+document.getElementById(unix).addEventListener("keydown", estrte_remove_placeholder, true);
+document.getElementById(unix).addEventListener("touchstart", estrte_remove_placeholder, true);
+document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
+document.getElementById(pic_counter + "estrte_input_field").addEventListener("mousedown", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
+document.getElementById(pic_counter + "estrte_input_field").addEventListener("touchstart", function(){document.getElementById(pic_counter + "estrte_input_field").contentEditable = true});
             style_added = true;
-          }
-estrte_to_focus = unix;
+}
 				}
-console.log(unix + " estrte_to_focus " + estrte_to_focus);
-if(estrte_to_focus != null){
+  inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
+    inserted_divsLength = inserted_divs.length;
+        elementsArray = [pic_counter + "estrte_input_field"];
+        for(let i = 0; i < inserted_divsLength; i++){
+            elementsArray.push(inserted_divs[i].id);
+					}
+    estrte_to_focus = elementsArray[elementsArray.length - 1];
 document.getElementById(estrte_to_focus).contentEditable = true;
-setTimeout(function(){document.getElementById(estrte_to_focus).focus();}, 200);
-				}
-estrte_color_editing = estrte_to_focus;
-			}else{
-				
+setTimeout(function(){
+document.getElementById(estrte_to_focus).focus();
+estrte_color_editing = estrte_to_focus;}, 200);
+			}else{ // if text is selected
 	            if (window.getSelection){
 	            range = window.getSelection().getRangeAt(0);    	
 			}else if (document.getSelection) {
@@ -2545,7 +2659,7 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
 	let post_edit_value = estrte_fragments_log[0].post_edit;
 	
 	        if (window.getSelection){
-	            range = window.getSelection().removeAllRanges();   	
+	            range = window.getSelection().removeAllRanges();
 			}else if (document.getSelection) {
 				range = document.getSelection().removeAllRanges();
 			}else if (document.selection){
@@ -2558,9 +2672,6 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
 			document.getElementById(pic_counter + "estrte_fontsSelect").value = "";
 			document.getElementById(pic_counter + "estrte_fontSizeSelect").value = "";
 		   let newDivColor = newSoFar;
-			}else{
-  document.getElementById(pic_counter + "estrte_input_field").focus();
-   }
 	}else{ 
     let regExp = new RegExp(/rgb\((\d{1,3})\, (\d{1,3})\, (\d{1,3})\)/, 'g');
     let newEditedDivColor = newDivColor.replace(regExp, newColor);  	
@@ -2625,7 +2736,7 @@ const unix =  pic_counter.toString() +  Math.round(+date / 1000);
         parentElementId =  document.selection().anchorNode.parentElement.id;
         parentElementTagName =  document.selection().anchorNode.parentElement.tagName;
         parentInnerHTML = document.selection().anchorNode.parentElement.innerHTML;
-     parentOuterHTML = window.selection().anchorNode.parentElement.outerHTML;
+        parentOuterHTML = document.selection().anchorNode.parentElement.outerHTML;
 		}
 	}
   if(parentElementId.indexOf(pic_counter)!= -1){
@@ -2678,6 +2789,7 @@ document.getElementById(pic_counter + "estrte_input_field").contentEditable = fa
             range.insertNode(docFrag);
 			}
 document.getElementById(unix).addEventListener("keydown", estrte_remove_placeholder, true);
+document.getElementById(unix).addEventListener("touchstart", estrte_remove_placeholder, true);
 document.getElementById(unix).contentEditable = true;
 setTimeout(function(){document.getElementById(unix).focus();}, 200);
           }
@@ -2740,8 +2852,6 @@ let new_undo_log = {"pre_edit": editFrom, "post_edit": editTo, "type_of_edit": "
  	document.getElementById(pic_counter + "estrte_redo").innerHTML = "Redo ";
  	document.getElementById(pic_counter + "estrte_redo").style.display = "inline-block";
 	}
-      //     document.getElementById(pic_counter + "estrte_content_wrapper").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
-     //      document.getElementById(pic_counter + "estrte_input_cont").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
 }
 function estrte_redo(pic_counter){
     estrte_color_editing = false;
@@ -2767,8 +2877,6 @@ estrte_fragments_log.unshift(new_log);
         document.getElementById(pic_counter + "estrte_input_field").addEventListener("click", document.getElementById(pic_counter + "estrte_input_field").focus());
 			let existingHTML = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
 	        let tempAfterDelete = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
-    //       document.getElementById(pic_counter + "estrte_content_wrapper").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
-    //       document.getElementById(pic_counter + "estrte_input_cont").style.backgroundColor = document.getElementById(pic_counter + "estrte_input_field").style.backgroundColor;
 }
 
 function add_table(pic_counter){
@@ -2884,7 +2992,6 @@ setTimeout(function(){document.getElementById(unix + "b").focus();}, 200);
 			document.getElementById(pic_counter + "estrte_fontsSelect").value = "";
 			document.getElementById(pic_counter + "estrte_fontSizeSelect").value = "";
 	newInputText = document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML;
-//document.getElementById(pic_counter + "estrte_content_wrapper").innerHTML = newInputText;
            document.getElementById(pic_counter + "estrte_content").value = estrte_sanitise_input_content(newInputText, pic_counter);
 new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit": "Edit"}; 
 	estrte_fragments_log.unshift(new_log);
@@ -2894,7 +3001,6 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
  	estrte_show_table_spec_div(pic_counter);
  	close_select_features_div(pic_counter);
 }
-
 function add_link(pic_counter){
   let selectedText;
   let origInputText;
@@ -2981,21 +3087,41 @@ new_log = {"pre_edit": origInputText, "post_edit": newInputText, "type_of_edit":
  	document.getElementById(pic_counter + "estrte_undo").innerHTML = "Undo";
  	link_spec_active = false;
  	estrte_show_select_link_div(pic_counter);
- 	close_select_features_div(pic_counter);
+      close_select_features_div(pic_counter);
 }
 function  estrte_show_select_color_div(pic_counter){
+	getCaretPosition(document.getElementById(pic_counter + "estrte_input_field"));
     estrte_color_editing = false;
-   let this_estrte_select_colour_div_html = estrte_select_colour_div_html;
-while(this_estrte_select_colour_div_html.indexOf('#placeholder#') != -1){
-this_estrte_select_colour_div_html = this_estrte_select_colour_div_html.replace('#placeholder#', pic_counter);
+var estrte_textColor = getComputedStyle(document.getElementById(pic_counter + "estrte_color_monitor")).getPropertyValue('--text-color');
+var estrte_textColorArray = estrte_textColor.substring(estrte_textColor.indexOf('(') + 1, estrte_textColor.indexOf(')')).split(",");
+let estrte_select_colour_div_html = '<div class="table_spec_form" id="#placeholder#color_select_form" style="position:relative;" contenteditable="false"  unselectable="on" inputmode="none"><div id="#placeholder#table_spec_heading" class="spec_features_head" contenteditable="false"  unselectable="on" inputmode="none">Colours<span class="close_window" title="Close" inputmode="none" unselectable="on" contentEditable = false inputmode="none" onclick="close_select_features_div(' + pic_counter + ')"><img src="/est_rte_multi/images/close_menu.png" alt="" /></span></div>';
+estrte_select_colour_div_html +='<div class="estrte_color_pallette" id="#placeholder#estrte_color_pallette" contenteditable="false" unselectable="on" inputmode="none">';
+estrte_select_colour_div_html += '<div class="estrte_colorRowCont"><div class="estrte_setColorRow" id="#placeholder#estrte_setColorRow" contenteditable="false"  unselectable="on" inputmode="none"></div>';
+estrte_select_colour_div_html += '<div class="estrte_lowerSetColorRow" class="estrte_lowerSetColorRow" id="#placeholder#estrte_lowerSetColorRow" contenteditable="false"  unselectable="on" inputmode="none"></div>';
+estrte_select_colour_div_html += '</div>';
+estrte_select_colour_div_html += '<div class="estrte_slidecontainer" contentEditable = false><label for="redComp" class="estrte_colorLabel" unselectable="on" inputmode="none" contentEditable = false>Red</label><input type="range" class="estrte_toolbar_slider" min="0" max="255" value="';
+estrte_select_colour_div_html += estrte_textColorArray[0];
+estrte_select_colour_div_html += '" step=1 class="slider" name="redComp" id="#placeholder#redComp" contenteditable="false" unselectable="on" inputmode="none" onchange="estrte_setColor(#placeholder#, \'red\')">';
+estrte_select_colour_div_html += '<label for="greenComp" class="estrte_colorLabel" inputmode="none" contentEditable = false>Green</label><input type="range" class="estrte_toolbar_slider" min="0" max="255" value="'
+estrte_select_colour_div_html += estrte_textColorArray[1];
+estrte_select_colour_div_html += '" step=1 class="slider" name="greenComp" id="#placeholder#greenComp" contenteditable="false"  unselectable="on" inputmode="none" onchange="estrte_setColor(#placeholder#, \'green\')">';
+estrte_select_colour_div_html += '<label for="blueComp" class="estrte_colorLabel" inputmode="none" contentEditable = false>Blue</label><input type="range" class="estrte_toolbar_slider" min="0" max="255" value="';
+estrte_select_colour_div_html += estrte_textColorArray[2];
+estrte_select_colour_div_html += '" step=1 class="slider" name="blueComp" id="#placeholder#blueComp" contenteditable="false"  unselectable="on" inputmode="none" onchange="estrte_setColor(#placeholder#, \'blue\')">';
+estrte_select_colour_div_html += '<label for="shadeComp" class="estrte_colorLabel" inputmode="none" contentEditable = false>Shade</label><input type="range" class="estrte_toolbar_slider" min="0" max="100" value="50" step=1 class="slider" name="shadeComp" id="#placeholder#shadeComp" contenteditable="false"  unselectable="on" inputmode="none" onchange="estrte_setColor(#placeholder#, \'shade\')">';
+estrte_select_colour_div_html += '<input type="hidden" name="tempRed" id="#placeholder#tempRed" value="u" /><input type="hidden" name="tempGreen" id="#placeholder#tempGreen" value="u" /><input type="hidden" name="tempBlue" id="#placeholder#tempBlue" value="u" />';
+estrte_select_colour_div_html += '</div>';
+estrte_select_colour_div_html += '</div>';
+estrte_select_colour_div_html += '<div class="estrte_colorPickerDivLower" id="#placeholder#estrte_colorPickerDivLower"><label class="estrte_setTextColorLabel" id="#placeholder#estrte_setTextColorLabelColor" onclick="estrte_setColor(\'color\')">Set Color</label>';
+estrte_select_colour_div_html += '<label class="estrte_setTextColorLabel" id="#placeholder#estrte_setTextColorLabelBgColor" onclick="estrte_setBackgroundColor(#placeholder#)">Set Background</label></div></div>';
+while(estrte_select_colour_div_html.indexOf('#placeholder#') != -1){
+estrte_select_colour_div_html = estrte_select_colour_div_html.replace('#placeholder#', pic_counter);
 }
-document.getElementById(pic_counter + "estrte_select_features_div").style.display = "block";
-document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = this_estrte_select_colour_div_html;
+document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = estrte_select_colour_div_html;
+let thisTarget = document.getElementById(pic_counter + "estrte_select_features_div");
+slideDown(pic_counter, "520px");
 
         estrte_populate_colour_div(pic_counter, '');
-        document.getElementById(pic_counter + "estrte_input_field").addEventListener("keyup", function () {
-            close_select_features_div(pic_counter);
-        });
  }
 function estrte_populate_colour_div(pic_counter, holder){
     estrte_color_editing = false;
@@ -3005,7 +3131,7 @@ function estrte_populate_colour_div(pic_counter, holder){
     for (let i = 0; i < estrte_rgb_colors.length; i++) {
                     let unix =  pic_counter.toString() +  new Date().valueOf();
                     thisId = unix + (Math.random() * 10000);
-  document.getElementById(pic_counter + "estrte_setColorRow" + holder).innerHTML += '<div class="estrte_setColorUnit"><label id=' + thisId + ' class="estrte_setSetColorLabel" style="color:rgb(' + estrte_rgb_colors[i] + ');background-color:rgb(' + estrte_rgb_colors[i] + ');" onclick="estrte_setSetColor(' + pic_counter + ', '+ estrte_rgb_colors[i] + ', 10)">C</label></div>';
+  document.getElementById(pic_counter + "estrte_setColorRow" + holder).innerHTML += '<div class="estrte_setColorUnit"><label id=' + thisId + ' class="estrte_setSetColorLabel" style="color:rgb(' + estrte_rgb_colors[i] + ');background-color:rgb(' + estrte_rgb_colors[i] + ');" unselectable="on" inputmode="none" readonly="readonly" onmousedown="estrte_setSetColor(' + pic_counter + ', '+ estrte_rgb_colors[i] + ', 10)" ontouchstart="estrte_setSetColor(' + pic_counter + ', '+ estrte_rgb_colors[i] + ', 10)">C</label></div>';
   if(estrte_rgb_colors[i] == "255, 255, 255"){
   	document.getElementById(thisId).style.border = 'solid 0.1px #8b8b8b';
   	document.getElementById(pic_counter + "estrte_color_monitor").style.border = 'solid 0.3px #8b8b8b';
@@ -3016,22 +3142,14 @@ function estrte_populate_colour_div(pic_counter, holder){
 for (let i = 0; i < estrte_lower_rgb_colors.length; i++) {
                     let unix =  pic_counter.toString() +  new Date().valueOf();
                     thisId = unix + (Math.random() * 10000);
-  document.getElementById(pic_counter + "estrte_lowerSetColorRow" + holder).innerHTML += '<div class="estrte_setColorUnit"><label id=' + thisId + ' class="estrte_setSetColorLabel" style="color:rgb(' + estrte_lower_rgb_colors[i] + ');background-color:rgb(' + estrte_lower_rgb_colors[i] + ');" onclick="estrte_setSetColor(' + pic_counter + ', ' + estrte_lower_rgb_colors[i] + ', 10)">C</label></div>';
-  if(estrte_lower_rgb_colors[i] == "255, 255, 255"){
-  	document.getElementById(pic_counter + thisId).style.border = 'solid 0.3px #8b8b8b';
-  	document.getElementById(pic_counter + "estrte_color_monitor").style.border = 'solid 0.3px #8b8b8b';
-  }else{
-  	document.getElementById(pic_counter + "estrte_color_monitor").style.border = "0";
-  }
+  document.getElementById(pic_counter + "estrte_lowerSetColorRow" + holder).innerHTML += '<div class="estrte_setColorUnit"><label id=' + thisId + ' class="estrte_setSetColorLabel" style="color:rgb(' + estrte_lower_rgb_colors[i] + ');background-color:rgb(' + estrte_lower_rgb_colors[i] + ');" unselectable="on" inputmode="none" readonly="readonly" onmousedown="estrte_setSetColor(' + pic_counter + ', ' + estrte_lower_rgb_colors[i] + ', 10)" ontouchstart="estrte_setSetColor(' + pic_counter + ', ' + estrte_lower_rgb_colors[i] + ', 10)">C</label></div>';
 }
 }
-
 function estrte_show_table_spec_div(pic_counter){
    let this_table_html = table_html;
 while(this_table_html.indexOf('#placeholder#') != -1){
 this_table_html = this_table_html.replace('#placeholder#', pic_counter);
 }
-document.getElementById(pic_counter + "estrte_select_features_div").style.display = "block";
 document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = this_table_html;
 for (let i = 1; i <= estrte_number_of_table_row_options; i++) {
   document.getElementById(pic_counter + "no_of_rows_select").innerHTML += '<option value="' + i + '">' + i + "</option>";
@@ -3048,14 +3166,17 @@ for (let i = 1; i <= estrte_cell_spacing_options; i++) {
 for (let i = 1; i <= estrte_number_of_table_column_options; i++) {
   document.getElementById(pic_counter + "no_of_columns_select").innerHTML += '<option value="' + i + '">' + i + "</option>";
 }
+let thisTarget = document.getElementById(pic_counter + "estrte_select_features_div");
+slideDown(pic_counter, "520px");
 }
 function estrte_show_select_link_div(pic_counter){
    let this_link_html = link_html;
 while(this_link_html.indexOf('#placeholder#') != -1){
 this_link_html = this_link_html.replace('#placeholder#', pic_counter);
 }
-document.getElementById(pic_counter + "estrte_select_features_div").style.display = "block";
 	    document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = this_link_html;
+let thisTarget = document.getElementById(pic_counter + "estrte_select_features_div");
+slideDown(pic_counter, "380px");
 }
 
  function estrte_setShade(pic_counter){
@@ -3139,7 +3260,7 @@ document.getElementById(pic_counter + "estrte_select_features_div").style.displa
  	document.getElementById(pic_counter + "estrte_undo").innerHTML = "Undo";
  }
  
- function estrte_setSetColor(pic_counter, red, green, blue, alpha){
+ function estrte_setSetColor(pic_counter, red, green, blue, alpha){ 
  	let newColor;
   	document.getElementById(pic_counter + "redComp").value = red;
  	document.getElementById(pic_counter + "greenComp").value = green;
@@ -3152,8 +3273,7 @@ document.getElementById(pic_counter + "estrte_select_features_div").style.displa
  	document.getElementById(pic_counter + "shadeComp").value = 50;
     estrte_setContentColor(pic_counter);
 }
- 
- function estrte_setContentColor(pic_counter){
+function estrte_setContentColor(pic_counter){
  	let red = document.getElementById(pic_counter + "redComp").value;
  	let green = document.getElementById(pic_counter + "greenComp").value;
  	let blue = document.getElementById(pic_counter + "blueComp").value;
@@ -3203,10 +3323,29 @@ document.getElementById(pic_counter + "estrte_select_features_div").style.displa
  	estrte_add_style(pic_counter, 'color', newColor);
  }
 function close_select_features_div(pic_counter){
-	document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = '';
-	document.getElementById(pic_counter + "estrte_select_features_div").style.display = "none";
-let estrte_select_features_divs = document.getElementsByClassName("estrte_select_features_div");
-document.getElementById(pic_counter + "estrte_input_field").removeEventListener("keydown", close_select_features_div);
+let target = document.getElementById(pic_counter + "estrte_select_features_div");
+target.style.height = "400px";;
+target.style.transitionProperty = 'height, margin, padding'; /* [1.1] */
+target.style.transitionDuration = estrte_animation_dur + 'ms'; /* [1.2] */
+target.style.boxSizing = 'border-box'; /* [2] */
+target.style.height = target.offsetHeight + 'px'; /* [3] */
+target.style.height = 0; /* [4] */
+target.style.paddingTop = 0; /* [5.1] */
+target.style.paddingBottom = 0; /* [5.2] */
+target.style.marginTop = 0; /* [6.1] */
+target.style.marginBottom = 0; /* [7.2] */
+target.style.overflow = 'hidden'; /* [7] */
+window.setTimeout( () => {
+  target.style.display = 'none'; /* [8] */
+  target.style.removeProperty('height'); /* [9] */
+  target.style.removeProperty('padding-top');  /* [10.1] */ 
+  target.style.removeProperty('padding-bottom');  /* [10.2] */ 
+  target.style.removeProperty('margin-top');  /* [11.1] */ 
+  target.style.removeProperty('margin-bottom');  /* [11.2] */ 
+  target.style.removeProperty('overflow');  /* [12] */ 
+  target.style.removeProperty('transition-duration');  /* [13.1] */ 
+  target.style.removeProperty('transition-property');  /* [13.2] */ 
+}, estrte_animation_dur);
 }
  function ancestor(node, match){
   if(!node)
@@ -3304,9 +3443,8 @@ for (let j = 0; j < estrte_fonts.length; j++) {
   estrte_fontsSelectInputs[i].innerHTML += '<option value="' + estrte_fonts[j] + '">' + estrte_fonts[j] + "</option>";
 }
 }
-function estrte_show_select_features_div(pic_counter){
-//document.getElementById(pic_counter + "estrte_select_features_div").innerHTML = html;
-}
+//function estrte_show_select_features_div(pic_counter){
+//}
 for(let i = 0; i < estrte_input_fields.length; i++){
 estrte_input_fields[i].focus;
 }
