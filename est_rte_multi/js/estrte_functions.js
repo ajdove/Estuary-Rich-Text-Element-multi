@@ -1828,6 +1828,7 @@ function setCaretPosition(ctrl, start, end) {
     }
 }          
 function estrte_show_select_special_characters_div(pic_counter){
+	event.preventDefault();
     estrte_color_editing = false;
 //document.getElementById(pic_counter + "estrte_select_features_div").style.display = "block";
 let thisTarget = document.getElementById(pic_counter + "estrte_select_features_div");
@@ -1847,6 +1848,7 @@ estrte_special_chars.forEach((specialChar) => {
 }
 
 function estrte_show_select_estrte_emojis_div(pic_counter){
+	event.preventDefault();
 let estrte_emojis_list_html = '<div id="#placeholder#estrte_emojis_list" class="table_spec_form"><div class="spec_features_head" id="table_spec_heading">Emojis<span class="close_window" title="Close" inputmode="none" unselectable="on" onclick="close_select_features_div(\'#placeholder#\')"><img src="/est_rte_multi/images/close_menu.png" alt="" /></span></div><div class="estrte_emojis_category" id="#placeholder#emojisgeneral" inputmode="none" unselectable="on"><div class="estrte_emojis_category_show" class="emojis_showgeneral" id="#placeholder#emojis_showgeneral"></div></div>';
 for (let i = 0; i < estrte_emoji_categories.length; i++){
       var category = estrte_emoji_categories[i];
