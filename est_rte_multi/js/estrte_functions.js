@@ -2976,11 +2976,8 @@ document.getElementById(pic_counter + "estrte_input_field").contentEditable = fa
             let node = el;
              let lastNode = docFrag.appendChild(node);
         if(first_layer_inserted_elements__entrycounter____entrycounter__.length > 0){
- 	alert("--e " + insertAfterElement.id);
     insertAfter(node, insertAfterElement);
 			}else{
- 	alert("--f " + insertAfterElement.id);
-        
             range.insertNode(docFrag);
 			}
 document.getElementById(unix).addEventListener("keydown", estrte_remove_placeholder__entrycounter__, true);
