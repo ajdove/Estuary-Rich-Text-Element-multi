@@ -3058,7 +3058,7 @@ let unix =  pic_counter.toString() +  Math.round(+date / 1000);
 	let rows_loop_start = 1;
 	let first_row = "";
 	let el;
-    let table_html__entrycounter__ = '<table class="input_table" style="overflow-x:auto;border:' + border + ';cellspacing=' + cellspacing + ';cellpadding=' + cellpadding + ';"><tbody><div class="table_header" id="#placeholder#table_header' + unix + '">' + table_caption + '</div>';
+    let table_html__entrycounter__ = '<div class="table_cont"><div class="table_caption">' + table_caption + '</div><table class="input_table" style="overflow-x:auto;border:' + border + ';cellspacing=' + cellspacing + ';cellpadding=' + cellpadding + ';">';
 	if((table_headings == "firstRow") || (table_headings == "both")){
 		rows_loop_start++;
 		table_html__entrycounter__ += '<tr>';
@@ -3078,7 +3078,7 @@ let unix =  pic_counter.toString() +  Math.round(+date / 1000);
 		}
 		table_html__entrycounter__ += '</tr>';
 	}
-		table_html__entrycounter__ += '</tbody></table>';
+		table_html__entrycounter__ += '</table></div>';
 document.getElementById(pic_counter + "estrte_input_field").contentEditable = false;
   let inserted_divs = document.getElementById(pic_counter + "estrte_input_field").getElementsByClassName("inserted_div");
          let inserted_divsLength = inserted_divs.length;
