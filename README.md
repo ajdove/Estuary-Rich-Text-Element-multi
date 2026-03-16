@@ -1,3 +1,4 @@
+Just edited the css for "estrte_input_class" slighly for ascetic reasons.
 MAJOR CHANGES! 
 It is recommended that you remove any previous version and replace it with the updated version here. Much as I love simplicity when it comes to installing software - I have found a potential weakness when entering data into multiple RTEs on a page. The revised version is slightly more complicated to instal. 
 The steps are: 
