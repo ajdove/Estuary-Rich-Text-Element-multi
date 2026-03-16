@@ -57,11 +57,13 @@ label :hover{
 }
 .estrte_input_cont{
     width: 100%;
-    min-height: 284px;
+    min-height: 82px;
+    line-height: normal;
     font-size: var(--master-font-size);
     background-color: var(--input-background-color);
     font-family: verdana, arial, sans-serif;
     border: var(--comment-input-border);
+    padding: 2px 4px 2px 4px;
 }
 .estrte_toolbar{
 	width: 100%;
