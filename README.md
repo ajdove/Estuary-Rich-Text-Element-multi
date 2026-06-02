@@ -1,3 +1,5 @@
+Just carried out a major renaming of the id attributes. I moved the numerical part of the id identifiers from the beginning to the end.  This has made the identifiers more properly formed. Most times it worked previously but there were situations - most notably when used in angular components - that having a number at the beginning of an identifier caused an error.
+
 Just edited the css for "estrte_input_class" slighly for ascetic reasons.
 MAJOR CHANGES! 
 It is recommended that you remove any previous version and replace it with the updated version here. Much as I love simplicity when it comes to installing software - I have found a potential weakness when entering data into multiple RTEs on a page. The revised version is slightly more complicated to instal. 
